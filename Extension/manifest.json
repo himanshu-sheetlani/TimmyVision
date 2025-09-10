@@ -4,20 +4,26 @@
   "version": "1.0",
   "description": "Detect fake or AI-generated content directly in your browser.",
   "permissions": [
-    "contextMenus",
+    "storage",
+    "identity",
     "activeTab",
-    "scripting",
-    "storage"
+    "contextMenus",
+    "scripting"
   ],
   "host_permissions": [
     "https://your-backend-api.com/*"
   ],
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
   "action": {
     "default_popup": "popup/popup.html",
     "default_icon": {
       "16": "icons/icon16.png",
-      "48": "icons/icon16.png",
-      "128": "icons/icon16.png"
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
     }
   },
   "background": {

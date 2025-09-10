@@ -6,8 +6,13 @@ chrome.runtime.onInstalled.addListener(() => {
     contexts: ["selection"]
   });
 
-  // For images
-  chrome.contextMenus.create({
+chrome.runtime.onInstalled.addListener(() => {
+  // Redirect to your website dashboard login page
+  chrome.tabs.create({ url: "https://yourdashboard.com/login" }); //!login URL
+});
+
+// For images
+chrome.contextMenus.create({
     id: "checkImage",
     title: "Check Fake News (Image)",
     contexts: ["image"]

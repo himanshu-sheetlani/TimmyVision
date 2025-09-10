@@ -1,13 +1,49 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TimmyVision - Misinformation Detector</title>
   <link rel="stylesheet" href="popup.css">
 </head>
 <body>
-  <h3>Fake News Detector</h3>
-  <textarea id="inputText" placeholder="Paste text to check..."></textarea>
-  <button id="checkBtn">Check</button>
-  <p id="result"></p>
-  <script src="popup.js"></script>
+  <div class="app-container">
+    <!-- Header -->
+    <div class="header">
+      <div class="logo">
+        <img src="https://i.postimg.cc/wjTsfj9G/Whats-App-Image-2025-09-10-at-19-51-28-6f711e08.jpg" alt="Logo">
+        <span>TimmyVision</span>
+      </div>
+      <div class="actions">
+        <span>History</span>
+        <span>⚙</span>
+      </div>
+    </div>
+
+    <!-- Title -->
+    <h2>Misinformation Detector</h2>
+
+    <!-- Input -->
+    <input type="text" id="userInput" class="input-box" placeholder="Paste text here...">
+
+    <!-- Buttons -->
+    <div class="buttons">
+      <button class="btn btn-primary" id ="analyzeBtn" onclick="analyzeText()">Analyze Text</button>
+      <button class="btn btn-secondary" id="clearBtn" onclick="clearInput()">Clear Input</button>
+    </div>
+
+    <!-- Results -->
+    <div class="results" id="results">
+      <strong>Analysis Results</strong>
+      <p>Results will appear here after analysis.</p>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <div><a href="#">About</a> / <a href="#">Help / FAQ</a></div>
+      <div>v1.0.0</div>
+    </div>
+  </div>
+  <script src="./popup.js"></script>
 </body>
 </html>
