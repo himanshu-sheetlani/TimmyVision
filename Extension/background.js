@@ -1,21 +1,26 @@
 chrome.runtime.onInstalled.addListener(() => {
-  // For selected text
-  chrome.contextMenus.create({
-    id: "checkText",
-    title: "Check Fake News (Text)",
-    contexts: ["selection"]
-  });
-
-chrome.runtime.onInstalled.addListener(() => {
   // Redirect to your website dashboard login page
   chrome.tabs.create({ url: "https://yourdashboard.com/login" }); //!login URL
 });
 
+// For selected text
+chrome.contextMenus.create({
+  id: "checkText",
+  title: "Check Fake News (Text)",
+  contexts: ["selection"]
+});
+
 // For images
 chrome.contextMenus.create({
-    id: "checkImage",
-    title: "Check Fake News (Image)",
-    contexts: ["image"]
+  id: "checkImage",
+  title: "Check Fake News (Image)",
+  contexts: ["image"]
+});
+
+chrome.contextMenus.onClicked.addListener((info, tab) => {
+  chrome.tabs.sendMessage(tab.id, {
+    action: "checkNews",
+    data: info.selectionText || info.srcUrl
   });
 });
 
@@ -40,7 +45,8 @@ function sendToBackend(payload, tab) {
     chrome.scripting.executeScript({
       target: { tabId: tab.id },
       func: (result) => {
-        alert(`Result: ${result.status} (Confidence: ${Math.round(result.confidence*100)}%)`);
+        // alert(`Result: ${result.status} (Confidence: ${Math.round(result.confidence*100)}%)`);
+        // alert(`Result: REAL (Confidence: 92.3%)`);
       },
       args: [data]
     });

@@ -1,36 +1,39 @@
-// Listen for messages from background.js
-chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-  if (message.type === "highlightText") {
-    highlightText(message.text, message.result, message.confidenc);
+chrome.runtime.onMessage.addListener((message) => {
+  if (message.action === "checkNews") {
+    showDialog("Analyzing...");
+
+    fetch("http://localhost:3000/analyze", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ text: message.data })
+    })
+    .then(res => alert(res.json()))
+    .then(data => {
+      const result = `${data.Result} | Confidence: ${data.Confidence}`;
+      showDialog(result);
+    })
+
+    .catch((err) => {
+      showDialog(`❌ Error analyzing. ${err}`);
+    });
   }
 });
 
-// Highlight function
-function highlightText(text, result, confidence) {
-  const color = result === "fake" ? "red" : result === "real" ? "green" : "orange";
-  const tooltip = `${result.toUpperCase()} | Confidence: ${(confidence * 100).toFixed(1)}%`;
-
-  // Walk through DOM and wrap matching text
-  walk(document.body, text, color, tooltip);
-}
-
-// Recursively walk DOM nodes
-function walk(node, text, color, tooltip) {
-  if (node.nodeType === 3) { // text node
-    const regex = new RegExp(text, "gi");
-    if (regex.test(node.nodeValue)) {
-      const span = document.createElement("span");
-      span.style.backgroundColor = color;
-      span.style.color = "#fff";
-      span.style.padding = "2px";
-      span.style.borderRadius = "3px";
-      span.title = tooltip;
-      span.textContent = node.nodeValue;
-      node.parentNode.replaceChild(span, node);
-    }
-  } else if (node.nodeType === 1 && node.nodeName !== "SCRIPT" && node.nodeName !== "STYLE") {
-    for (let i = 0; i < node.childNodes.length; i++) {
-      walk(node.childNodes[i], text, color, tooltip);
-    }
+function showDialog(content) {
+  let dialog = document.getElementById("fakeNewsDialog");
+  if (!dialog) {
+    dialog = document.createElement("div");
+    dialog.id = "fakeNewsDialog";
+    dialog.style.position = "fixed";
+    dialog.style.bottom = "20px";
+    dialog.style.right = "20px";
+    dialog.style.background = "#111";
+    dialog.style.color = "#fff";
+    dialog.style.padding = "15px";
+    dialog.style.borderRadius = "8px";
+    dialog.style.boxShadow = "0 2px 10px rgba(0,0,0,0.5)";
+    dialog.style.zIndex = "9999";
+    document.body.appendChild(dialog);
   }
+  dialog.textContent = content;
 }
