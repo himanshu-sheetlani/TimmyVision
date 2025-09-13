@@ -1,66 +1,72 @@
 import React from "react";
 import Navbar from "./components/Navbar";
-
+import { ChevronRight } from "lucide-react";
+import { IoLogoWindows } from "react-icons/io";
+import { Button } from "@/components/ui/button";
 const Land = () => {
   return (
-    <div className="relative min-h-screen bg-gradient-to-br from-black via-gray-900 to-indigo-950 text-white">
-      <Navbar />
-
-      {/* Hero Section */}
-      <section className="flex flex-col items-center justify-center text-center min-h-screen px-6">
-        <h2 className="text-5xl md:text-6xl font-extrabold leading-tight">
-          Detect <span className="text-indigo-500">Deepfakes</span> <br />
-          and Stop <span className="text-pink-500">Misinformation</span>
-        </h2>
-        <p className="mt-6 text-lg md:text-xl max-w-2xl text-gray-300">
-          TimmyVision helps you analyze images and videos using AI-powered
-          models. Upload your file and let our system reveal the truth.
-        </p>
-        <div className="mt-8 flex gap-4">
-          <a
-            href="/signup"
-            className="px-6 py-3 rounded-full bg-indigo-600 text-white font-semibold hover:bg-indigo-500 transition"
-          >
-            Get Started
-          </a>
-          <a
-            href="#how-it-works"
-            className="px-6 py-3 rounded-full border border-gray-400 text-gray-200 hover:bg-white/10 transition"
-          >
-            Learn More
-          </a>
-        </div>
-      </section>
-
-      {/* How it Works Section */}
-      <section id="how-it-works" className="py-20 px-6 max-w-6xl mx-auto">
-        <h3 className="text-3xl font-bold text-center mb-12">
-          How It <span className="text-indigo-500">Works</span>
-        </h3>
-        <div className="grid md:grid-cols-3 gap-10">
-          <div className="p-6 bg-white/5 rounded-2xl shadow-lg hover:bg-white/10 transition">
-            <h4 className="text-xl font-semibold mb-3">1. Upload</h4>
-            <p className="text-gray-300">
-              Choose an image or video you want to verify. Our system supports
-              multiple formats.
-            </p>
+    <div className="relative min-h-screen text-white">
+      {/* Background with Gradient and Grid */}
+      <div
+        className="absolute inset-0 z-0"
+        style={{
+          background:
+            "radial-gradient(125% 125% at 50% 100%, #000000 40%, #010133 100%)",
+        }}
+      >
+        <div className="min-h-screen w-full bg-black relative flex flex-col items-center justify-center">
+          {/* Vercel Grid */}
+          <div
+            className="absolute inset-0 z-0 opacity-60"
+            style={{
+              backgroundImage: `
+          linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px)
+        `,
+              backgroundSize: "50px 50px",
+            }}
+          />
+          <div className="bg-transparent border-[1px] border-zinc-800 rounded-full p-1">
+            <div className="bg-zinc-900 rounded-full flex items-center px-2 py-1">
+              ✨
+              <h1 className="text-sm font-[poppins]">
+                Welcome to <span>TimmyVision</span>
+              </h1>
+              <ChevronRight />
+            </div>
           </div>
-          <div className="p-6 bg-white/5 rounded-2xl shadow-lg hover:bg-white/10 transition">
-            <h4 className="text-xl font-semibold mb-3">2. Analyze</h4>
-            <p className="text-gray-300">
-              Our AI models process the file and run deepfake & misinformation
-              detection checks.
+          <div className="mt-8 flex w-11/12 max-w-4xl flex-col items-center md:w-full">
+            <div>
+              <h1 className="text-4xl md:text-8xl text-center font-[inter]">
+                Stop Misinformation Before It Spreads
+              </h1>
+            </div>
+
+            <p className="mt-6 text-center font-[poppins] text-base text-zinc-600 md:text-lg">
+              Our AI-powered platform detects deepfakes and misinformation in
+              real time, helping you stay informed and make decisions based on
+              truth. Protect yourself from digital deception with cutting-edge
+              detection technology
             </p>
-          </div>
-          <div className="p-6 bg-white/5 rounded-2xl shadow-lg hover:bg-white/10 transition">
-            <h4 className="text-xl font-semibold mb-3">3. Results</h4>
-            <p className="text-gray-300">
-              Get confidence scores and insights so you know whether to trust
-              the content.
-            </p>
+
+            <div className="relative mt-8 hidden w-full items-center justify-center gap-4 md:mt-12 md:flex">
+              <div className="border-zinc-600 border-[1px] p-1 rounded-xl hover:border-zinc-400">
+                <Button className="bg-white text-black py-7 px-4 hover:bg-white ">
+                  <IoLogoWindows /> Downloads Extension
+                </Button>
+              </div>
+
+              
+            </div>
           </div>
         </div>
-      </section>
+      </div>
+
+      {/* Content */}
+      <div className="relative z-10">
+        <Navbar />
+        {/* Your other content goes here */}
+      </div>
     </div>
   );
 };

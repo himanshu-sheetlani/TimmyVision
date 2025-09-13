@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Land from "./pages/Land-Page/Land";
 import Dashboard from "./pages/Dashboard/Dashboard";
+import UploadDetail from "./pages/UploadDetail/UploadDetail";
 
 import { ProtectedRoute, PublicRoute } from "./route-guards/Guard";
 
@@ -63,6 +64,7 @@ const App = () => {
             </ProtectedRoute>
           }
         />
+        <Route path="/upload/:id" element={<ProtectedRoute><UploadDetail/></ProtectedRoute>}/>
       </Routes>
     </BrowserRouter>
   );

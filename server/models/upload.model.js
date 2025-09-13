@@ -1,5 +1,15 @@
 import mongoose from "mongoose";
 
+const relatedNewsSchema = new mongoose.Schema(
+  {
+    title: { type: String },
+    url: { type: String },
+    content: { type: String },
+    score: { type: Number },
+  },
+  { _id: false } // don’t need a separate _id for each related news item
+);
+
 const uploadSchema = new mongoose.Schema(
   {
     userId: {
@@ -9,12 +19,15 @@ const uploadSchema = new mongoose.Schema(
     },
     fileUrl: {
       type: String,
-      required: true,
     },
     fileType: {
       type: String,
-      enum: ["image", "video"],
+      enum: ["image", "video", "text"],
       required: true,
+    },
+    textContent: {
+      type: String,
+      default: null,
     },
     prediction: {
       type: String,
@@ -29,6 +42,7 @@ const uploadSchema = new mongoose.Schema(
       enum: ["processing", "completed", "failed"],
       default: "processing",
     },
+    relatedNews: [relatedNewsSchema],
   },
   { timestamps: true }
 );

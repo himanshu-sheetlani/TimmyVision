@@ -63,8 +63,12 @@ app.use(
 // Routes
 import authRouter from "./routes/auth.route.js";
 import uploadRouter from "./routes/upload.route.js";
+import fetchRouter from "./routes/fetch.route.js";
+import analyseRouter from "./routes/analyse.route.js";
 app.use("/api/v1/user", authRouter);
 app.use("/api/v1/upload", uploadRouter);
+app.use("/api/v1/fetch", fetchRouter);
+app.use("/api/v1/analyse", analyseRouter);
 
 // Global error handler
 app.use((err, req, res, next) => {

@@ -1,35 +1,67 @@
 import React from "react";
+import { Button } from "@/components/ui/button";
 import { useAuthStore } from "@/store/useAuthStore";
+import { toast } from "react-hot-toast";
 
-const Navbar = () => {
+function Navbar() {
   const { signup } = useAuthStore();
-  const handleSignup = async () => {
+  const handleSignup = () => {
     try {
-      await signup();
+      signup();
     } catch (error) {
-      console.error("Signup failed:", error);
+      toast.error(error.message);
     }
   };
-  return (
-    <nav className="w-full fixed top-0 z-50 bg-black/50 backdrop-blur-md border-b border-white/10">
-      <div className="mx-auto px-16 py-6 flex items-center justify-between">
-        {/* Logo */}
-        <h1 className="text-2xl font-bold text-white tracking-wide">
-          Timmy<span className="text-indigo-500">Vision</span>
-        </h1>
 
-        {/* Right Side */}
-        <div>
-          <button
+  return (
+    <header className="sticky inset-x-0 top-0 z-50 h-20 w-full  bg-[#090909] px-4 border-b border-zinc-900">
+      <div className="mx-auto flex h-full items-center justify-between md:max-w-screen-xl">
+        <div className="flex items-start">
+          <a href="/" className="flex items-center gap-2">
+            <image
+              src="/assets/logo.webp"
+              alt="Neurix's Logo"
+              height={40}
+              width={40}
+            />
+            <span className="text-xl font-medium">TimmyVision</span>
+          </a>
+        </div>
+
+        <nav className="absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 transform md:flex">
+          {/* <ul className="flex items-center justify-center gap-8">
+            <li className="text-sm hover:text-foreground/80">
+              <a href="/#">Prices</a>
+            </li>
+            <li className="text-sm hover:text-foreground/80">
+              <a href="#">Features</a>
+            </li>
+            <li className="text-sm hover:text-foreground/80">
+              <a href="#">Enterprise</a>
+            </li>
+            <li className="text-sm hover:text-foreground/80">
+              <a href="#">Blog</a>
+            </li>
+            <li className="text-sm hover:text-foreground/80">
+              <a href="#">Forum</a>
+            </li>
+            <li className="text-sm hover:text-foreground/80">
+              <a href="#">Careers</a>
+            </li>
+          </ul> */}
+        </nav>
+
+        <div className="flex items-center gap-4">
+          <Button
             onClick={handleSignup}
-            className="px-5 py-2 rounded-full bg-indigo-600 text-white font-medium hover:bg-indigo-500 transition"
+            className="py-4 rounded-sm bg-white border-zinc-800 border-[1px] text-black hover:bg-white/80 cursor-pointer"
           >
-            Sign Up
-          </button>
+            Sign In
+          </Button>
         </div>
       </div>
-    </nav>
+    </header>
   );
-};
+}
 
 export default Navbar;

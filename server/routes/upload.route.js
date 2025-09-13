@@ -1,5 +1,9 @@
 import express from "express";
-import { uploadImage, uploadVideo } from "../controllers/media.controller.js";
+import {
+  uploadImage,
+  uploadVideo,
+  uploadText,
+} from "../controllers/media.controller.js";
 import { upload } from "../middlewares/multer.js";
 import { protectedRoute } from "../middlewares/auth.js";
 const uploadRouter = express.Router();
@@ -16,5 +20,6 @@ uploadRouter.post(
   upload.single("video"),
   uploadVideo
 );
+uploadRouter.post("/upload-text", protectedRoute, uploadText);
 
 export default uploadRouter;

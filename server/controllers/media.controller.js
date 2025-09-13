@@ -36,7 +36,7 @@ export const uploadImage = async (req, res) => {
     });
 
     // Queue background job for analysis
-    await agenda.now("analyze media", { uploadId: newUpload._id });
+    await agenda.now("analyze image", { uploadId: newUpload._id,image : newUpload.fileUrl });
 
     return res.status(200).json({
       success: true,
@@ -77,7 +77,7 @@ export const uploadVideo = async (req, res) => {
       userId: req.user._id,
       fileUrl: videoURL,
       fileType: "video",
-      status: "processing", 
+      status: "processing",
     });
 
     // Push reference to user.uploads
@@ -96,6 +96,55 @@ export const uploadVideo = async (req, res) => {
     });
   } catch (error) {
     console.error("Video Upload Error:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Internal server error",
+    });
+  }
+};
+
+// ====================== TEXT UPLOAD ======================
+export const uploadText = async (req, res) => {
+  try {
+    const { text } = req.body;
+
+    if (!text || text.trim().length === 0) {
+      return res.status(400).json({
+        success: false,
+        message: "Text input is required",
+      });
+    }
+
+    // Save upload record in DB
+    const newUpload = await Upload.create({
+      userId: req.user._id,
+      fileUrl: null, // no URL for text
+      fileType: "text",
+      textContent: text,
+      prediction: "Pending",
+      status: "processing",
+    });
+
+    // Optionally: store text in a separate field if needed
+    // e.g., add `content` field in schema for storing raw text
+    // await Upload.findByIdAndUpdate(newUpload._id, { content: text });
+
+    // Push reference to user.uploads
+    await User.findByIdAndUpdate(req.user._id, {
+      $push: { uploads: newUpload._id },
+    });
+
+    // Queue background job for analysis
+    await agenda.now("analyze media", { uploadId: newUpload._id, text });
+
+    return res.status(200).json({
+      success: true,
+      message: "Text uploaded. Analysis in progress.",
+      uploadId: newUpload._id,
+      text,
+    });
+  } catch (error) {
+    console.error("Text Upload Error:", error);
     return res.status(500).json({
       success: false,
       message: "Internal server error",
